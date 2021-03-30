@@ -2,7 +2,7 @@
 Control script for 2 channel  aqara relay. This script improves miiocli functioning.
 
 Prerequisite:
-- Library python-miio https://github.com/rytilahti/python-miio/ is installed and functions well
+- Library python-miio https://github.com/rytilahti/python-miio/ is installed and functions well (ver 0.5.4 was tested)
 - You have aqara relay (LLKZMK11LM, lumi.relay.c2acn01), which is controlled by xiaomi gateway 2 (DGNWG02LM, lumi.gateway.v3), with opened development mode
 
 Istallation:
