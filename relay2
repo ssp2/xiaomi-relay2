@@ -6,7 +6,7 @@ debug = False
 
 # installation:
 # put relay2 to /usr/local/bin
-# chmod 75 relay2
+# chmod 755 relay2
 
 # usage:
 # relay2 ip token sid channel cmd
