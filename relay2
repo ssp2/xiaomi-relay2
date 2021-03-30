@@ -1,0 +1,65 @@
+#!/usr/bin/python3
+debug = False
+
+# prerequisite:
+# library python-miio is installed and functions well
+
+# installation:
+# put relay2 to /usr/local/bin
+# chmod 75 relay2
+
+# usage:
+# relay2 ip token sid channel cmd
+# 4 parameters (order is important) to get status of a channel
+# 5 (+ cmd) parametets for channging a channel status
+# (1) ip - local ip of gateway (find in your router)
+# (2) token - gateway token (google, how to find)
+# (3) sid - id of subdevice (relay), get it from 
+# miiocli gateway --ip 192.168.1.xx --token tokentoken discover_devices
+# (4) channel - channel of relay can be 0 or 1
+# (5) cmd - command to change relay status (on, off, toggle)
+
+from miio import Gateway
+import sys
+
+
+if len(sys.argv) != 6 and len(sys.argv) != 5  : 
+    print('Error: 4 or 5 parameters required: gateway ip, gateway token, relay sid, relay channel, relay command (in command mode)')
+    sys.exit()
+
+ip = sys.argv[1]
+token =sys.argv[2]
+sid = sys.argv[3]
+
+channel = sys.argv[4]
+if channel != '0' and channel != '1' : 
+    print('Error: forth parameter is the relay channel and must be 0 or 1, not '+channel)
+    sys.exit()
+
+gateway = Gateway(ip, token)
+
+if debug : print(gateway.discover_devices())
+else : gateway.discover_devices()
+
+devices = gateway.devices
+relay = devices[sid]
+
+# get state mode, when 4 parameters required
+if debug :
+    print('parameters: '+ip+' : '+token+' : '+sid+' : '+channel)
+if len(sys.argv) == 5 : 
+    channel = ['channel_'+channel]
+    state = relay.get_property_exp(channel)
+    print(channel)
+    print(state)
+    sys.exit()
+
+# command mode, when 5 parameters required
+if debug : print('parameters: '+ip+' : '+token+' : '+sid+' : '+channel+' :'+command)
+command = sys.argv[5].lower()
+if command != 'on' and command != 'off' and command != 'toggle' : 
+    print('Error: fifth parameter is the relay command and must be (on, off,toggle), not '+ command)
+    sys.exit()
+
+result = relay.send_arg('toggle_ctrl_neutral', ['channel_'+channel, command]).pop()
+print(result)
