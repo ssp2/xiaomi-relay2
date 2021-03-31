@@ -17,7 +17,8 @@ relay2 ip token sid channel cmd
 - 5 (+ cmd) parameters for channging a channel status
 - (1) ip - local ip of gateway (find in your router)
 - (2) token - gateway token (google, how to find)
-- (3) sid - id of subdevice (relay), get it from 
-    miiocli gateway --ip 192.168.1.xx --token tokentoken discover_devices
+- (3) sid - id of subdevice (relay), commonly looks like 
+   lumi.158d0003f45775, get it from 
+   miiocli gateway --ip 192.168.1.xx --token tokentoken discover_devices
 - (4) channel - channel of relay can be 0 or 1
 - (5) cmd - command to change relay status (on, off, toggle)
