@@ -48,18 +48,18 @@ relay = devices[sid]
 if debug :
     print('parameters: '+ip+' : '+token+' : '+sid+' : '+channel)
 if len(sys.argv) == 5 : 
-    channel = ['channel_'+channel]
-    state = relay.get_property_exp(channel)
-    print(channel)
-    print(state)
+    print(relay.status)
     sys.exit()
 
 # command mode, when 5 parameters required
 if debug : print('parameters: '+ip+' : '+token+' : '+sid+' : '+channel+' :'+command)
 command = sys.argv[5].lower()
-if command != 'on' and command != 'off' and command != 'toggle' : 
+if command == 'on':
+    print(relay.on(channel))
+elif command == 'off':
+    print(relay.off(channel))
+elif command == 'toggle':
+    print(relay.toggle(channel))
+else:
     print('Error: fifth parameter is the relay command and must be (on, off,toggle), not '+ command)
     sys.exit()
-
-result = relay.send_arg('toggle_ctrl_neutral', ['channel_'+channel, command]).pop()
-print(result)
