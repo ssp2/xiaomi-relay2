@@ -48,6 +48,7 @@ relay = devices[sid]
 if debug :
     print('parameters: '+ip+' : '+token+' : '+sid+' : '+channel)
 if len(sys.argv) == 5 : 
+    relay.update()
     print(relay.status)
     sys.exit()
 
